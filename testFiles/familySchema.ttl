@@ -1,0 +1,57 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix :        	<http://www.example.org/family#> .
+@prefix xsd: 		<http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:       	<http://www.w3.org/2002/07/owl#> .
+
+
+:Person
+   owl:unionOf ( :Men :Women ) .
+   
+:Men
+  owl:equivalentClass [
+    rdf:type owl:Restriction ;
+    owl:onProperty :hasSex ;
+    owl:hasValue :Male
+  ].
+
+:Women
+  owl:equivalentClass [
+    a owl:Restriction ;
+    owl:onProperty :hasSex ;
+    owl:hasValue :Female
+  ].
+  
+:Ascendent
+	owl:equivalentClass [
+		rdf:type owl:Restriction ;
+		owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+		owl:onProperty :hasChild 
+	  ] .
+
+:Father 
+owl:intersectionOf (:Men :Ascendent).
+  
+:Mother
+owl:intersectionOf (:Women :Ascendent).
+  
+:hasParent 
+	rdf:type owl:ObjectProperty ;
+	rdfs:domain :Person ;
+	rdfs:range :Person .
+	
+:hasChild owl:inverseOf :hasParent .
+
+:hasSex 
+	rdf:type owl:ObjectProperty ;
+	rdfs:domain :Person ;
+	rdfs:range [ owl:oneOf (:Male :Female)].
+
+:hasFather rdfs:subPropertyOf :hasParent ;
+	rdfs:range :Father .
+
+:hasMother rdfs:subPropertyOf :hasParent ;
+	rdfs:range :Mother .
+
+	
+	

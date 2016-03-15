@@ -1,0 +1,47 @@
+:-consult('/Volumes/DATA/MBA/Doutoramento/Jena_Prolog/prologQueryRDF.P').
+
+:-registerPrefix('fam', 'http://www.example.org/family#').
+
+isSibling1(X, Y, L) :-
+	findall(sibling(X, Y), isSibling1(X, Y), L). 
+	 	
+
+
+
+isSibling1(X, Y) :-
+	rdfDB(triple(X, 'fam:hasParent', Z)), 
+	saveInFile2(['bp 21', X, Z]), 
+	rdfDB(triple(Y, 'fam:hasParent', Z)), 
+	saveInFile2(['bp 22', Y, Z]), 
+	%X \= Y, 	
+	(
+		(X \= Y, saveInFile2(['bp 23 true']));
+		(saveInFile2(['bp 23 false']), false)
+	).
+
+isSibling2(X, Y) :-
+	rdfDB(
+		[
+		triple(X, 'fam:hasParent', Z),
+		triple(Y, 'fam:hasParent', Z)
+		]), 
+	X \= Y. 	
+
+isSibling3(LResult) :-
+	executeSparql(
+	 	'
+	 	prefix : <http://www.example.org/family#> 
+		Select ?x ?y 
+		where { 
+			?x :hasParent ?z . 
+			?y :hasParent ?z . 
+			filter(?x != ?y) . 
+		}
+		', 
+			sibling, LResult).
+
+
+
+psex(X, Y) :-
+	rdfDB(triple(X, 'fam:hasSex', Y)).
+

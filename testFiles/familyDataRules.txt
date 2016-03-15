@@ -1,0 +1,22 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fam: <http://www.example.org/family#> .
+
+(?x fam:isSibling1 ?y) <-
+	(?x rdf:type fam:Person), 
+	(?y rdf:type fam:Person), 
+	IsSibling1(?x, ?y) . 
+
+(?x fam:isSibling2 ?y) <-
+	(?x rdf:type fam:Person), 
+	(?y rdf:type fam:Person), 
+	IsSibling2(?x, ?y) . 
+	
+(?x fam:isSibling3 ?y) <-
+	(?x rdf:type fam:Person), 
+	(?y rdf:type fam:Person), 
+	PrologCall(isSibling1, ?x, ?y) . 
+	
+(?x fam:isSibling4 ?y) <-
+	(?x rdf:type fam:Person), 
+	(?y rdf:type fam:Person), 
+	PrologCall(isSibling2, ?x, ?y) . 

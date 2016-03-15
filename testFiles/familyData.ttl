@@ -1,0 +1,36 @@
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix famData:    <http://www.example.org/familyData#> .
+@prefix :        	<http://www.example.org/family#> .
+@prefix xsd: 		<http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:       	<http://www.w3.org/2002/07/owl#> .
+
+famData:joseph 
+	:hasSex :Male .
+	
+famData:mary
+	:hasSex :Female .
+
+famData:michael
+	:hasSex :Male ;
+	:hasFather famData:joseph  ;
+	:hasMother famData:mary  .
+		
+famData:carla
+	:hasSex :Female ;
+	:hasFather famData:joseph  ;
+	:hasMother famData:mary  .
+
+famData:richard
+	:hasSex :Male ;
+	:hasFather famData:michael  .
+
+famData:john
+	:hasSex :Male ;
+	:hasMother famData:carla  .
+	
+famData:martha
+	:hasSex :Female ;
+	:hasMother famData:carla  .
+	
+	
